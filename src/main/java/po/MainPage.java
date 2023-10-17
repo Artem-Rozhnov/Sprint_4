@@ -10,13 +10,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.util.List;
 
 
-
 public class MainPage extends BasePage {
-    private WebDriver driver;
+    private final WebDriver driver;
 
     // Локаторы
-    private By question = By.className("accordion__button");
-    private By answerText = By.xpath("//*[@class='accordion__panel']/p");
+    private final By question = By.className("accordion__button");
+    private final By answerText = By.xpath("//*[@class='accordion__panel']/p");
 
 
     // Конструктор
@@ -24,10 +23,12 @@ public class MainPage extends BasePage {
         super(driver);
         this.driver = driver;
     }
-    public MainPage openMainPage(){
+
+    public MainPage openMainPage() {
         driver.get(MAIN_PAGE_URL);
         return this;
     }
+
     // Нажатие на стрелочку для раскрытия ответа на вопрос
     public void clickOnQuestion(int index) {
         List<WebElement> elements = driver.findElements(question);
@@ -40,8 +41,12 @@ public class MainPage extends BasePage {
     public String getAnswerText(int index) {
         List<WebElement> elements = driver.findElements(answerText);
         WebElement element = elements.get(index);
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        // Ждем и Кликаем по элементу
+        wait.until(ExpectedConditions.elementToBeClickable(element));
         return element.getText();
     }
+
     public void clickOrderButtonBottom() {
         WebElement element = driver.findElement(orderButtonBottom);
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
@@ -49,4 +54,5 @@ public class MainPage extends BasePage {
         // Ждем и Кликаем по элементу
         wait.until(ExpectedConditions.elementToBeClickable(element)).click();
     }
+
 }

@@ -2,17 +2,17 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import po.MainPage;
+
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.concurrent.TimeUnit;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(Parameterized.class)
 public class MainPageFAQTest extends BaseTest {
     private MainPage mainPage;
-    private int questionIndex;
-    private String expectedAnswer;
+    private final int questionIndex;
+    private final String expectedAnswer;
 
 
     public MainPageFAQTest(int questionIndex, String expectedAnswer) {
@@ -36,9 +36,8 @@ public class MainPageFAQTest extends BaseTest {
 
     @Test
     public void testFAQSection() {
-        mainPage= new MainPage(driver);
+        mainPage = new MainPage(driver);
         mainPage.clickOnQuestion(questionIndex);
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         String actualText = mainPage.getAnswerText(questionIndex);
         assertEquals(expectedAnswer, actualText);
         System.out.println("success");

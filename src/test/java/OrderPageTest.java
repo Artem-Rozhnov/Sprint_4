@@ -6,12 +6,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 
-
-public class OrderPageTest extends BaseTest{
+public class OrderPageTest extends BaseTest {
 
     private OrderPage orderPage;
     private MainPage mainPage;
-    private String orderCompletedSuccess = "Заказ оформлен";
+    private final String orderCompletedSuccess = "Заказ оформлен";
 
     @Test
     public void testFillOderViaButtonTop() {
@@ -26,7 +25,7 @@ public class OrderPageTest extends BaseTest{
         orderPage.selectDeliveryDate("11.10.2023");
         orderPage.selectRentLength("двое суток");
         orderPage.selectColorBlack();
-        orderPage.fillCommentsForDeliveryGuy ("Быстрее");
+        orderPage.fillCommentsForDeliveryGuy("Быстрее");
         orderPage.pressSubmitButton();
         orderPage.pressYesButton();
         orderPage.popupMessage();
@@ -34,6 +33,7 @@ public class OrderPageTest extends BaseTest{
         assertTrue(popupMessage.contains(orderCompletedSuccess));
 
     }
+
     @Test
     public void testFillOderViaButtonBottom() {
         orderPage = new OrderPage(driver);
@@ -48,7 +48,7 @@ public class OrderPageTest extends BaseTest{
         orderPage.selectDeliveryDate("11.12.2023");
         orderPage.selectRentLength("двое суток");
         orderPage.selectColorGrey();
-        orderPage.fillCommentsForDeliveryGuy ("Быстрее");
+        orderPage.fillCommentsForDeliveryGuy("Быстрее");
         orderPage.pressSubmitButton();
         orderPage.pressYesButton();
         orderPage.popupMessage();
@@ -56,6 +56,7 @@ public class OrderPageTest extends BaseTest{
         assertTrue(popupMessage.contains(orderCompletedSuccess));
 
     }
+
     @Test
     public void testEmptyPhoneNumberError() {
         orderPage = new OrderPage(driver);
@@ -68,6 +69,7 @@ public class OrderPageTest extends BaseTest{
         String errorMessagePhoneNumber = orderPage.getPhoneNumberFieldError();
         assertEquals("Введите корректный номер", errorMessagePhoneNumber);
     }
+
     @Test
     public void testEmptySubwayStationError() {
         orderPage = new OrderPage(driver);
@@ -77,10 +79,11 @@ public class OrderPageTest extends BaseTest{
         orderPage.fillAddressFieldInput("ул. Калиновская, 20, Москва");
         orderPage.pressSubmitButton();
         String errorSubwayStationError = orderPage.getSubwayStationError();
-        assertEquals("Выберите станцию",errorSubwayStationError );
+        assertEquals("Выберите станцию", errorSubwayStationError);
     }
+
     @Test
-    public void testEmptyNameFieldError(){
+    public void testEmptyNameFieldError() {
         orderPage = new OrderPage(driver);
         orderPage.clickOrderButtonTop();
         orderPage.fillNameFieldInput("");
@@ -89,16 +92,18 @@ public class OrderPageTest extends BaseTest{
         assertEquals("Введите корректное имя", errorMessageName);
 
     }
+
     @Test
-    public void testEmptySurnameFieldError(){
+    public void testEmptySurnameFieldError() {
         orderPage = new OrderPage(driver);
         orderPage.clickOrderButtonTop();
         orderPage.fillNameFieldInput("Олег");
         orderPage.fillSurnameFieldInput("");
         orderPage.pressSubmitButton();
         String errorMessageSurname = orderPage.getSurnameFieldError();
-        assertEquals("Введите корректную фамилию",errorMessageSurname);
+        assertEquals("Введите корректную фамилию", errorMessageSurname);
     }
+
     @Test
     public void testEmptyAddressFieldError() {
         orderPage = new OrderPage(driver);
@@ -124,7 +129,7 @@ public class OrderPageTest extends BaseTest{
         orderPage.selectDeliveryDate("11.10.2023");
         orderPage.selectRentLength("двое суток");
         orderPage.selectColorBlack();
-        orderPage.fillCommentsForDeliveryGuy ("");
+        orderPage.fillCommentsForDeliveryGuy("");
         orderPage.pressSubmitButton();
         String errorCommentsDeliveryField = orderPage.getCommentsDeliveryFieldError();
         assertEquals("Тут что-то не так", errorCommentsDeliveryField);

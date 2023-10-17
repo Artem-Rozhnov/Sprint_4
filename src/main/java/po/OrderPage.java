@@ -1,87 +1,98 @@
 package po;
 
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
+
 public class OrderPage extends BasePage {
-    public OrderPage(WebDriver driver){
+    // Локаторы для полей ввода в форме заказа
+    private final By nameFieldInput = By.xpath(".//input[@placeholder='* Имя']");
+    private final By surnameFieldInput = By.xpath(".//input[@placeholder='* Фамилия']");
+    private final By addressFieldInput = By.xpath(".//input[@placeholder='* Адрес: куда привезти заказ']");
+    private final By phoneFieldInput = By.xpath(".//input[@placeholder='* Телефон: на него позвонит курьер']");
+    private final By rentLength = By.xpath(".//*[@class='Dropdown-placeholder']");
+    private final By colorSelectionBlack = By.xpath(".//input[@id='black']");
+    private final By colorSelectionGrey = By.xpath(".//input[@id='grey']");
+    private final By commentsForDeliveryGuy = By.xpath(".//input[@class='Input_Input__1iN_Z Input_Responsible__1jDKN']");
+    // Кнопки для заказа в форме заказа
+    private final By buttonNext = By.xpath(".//button[@class='Button_Button__ra12g Button_Middle__1CSJM']");
+    private final By yesButton = By.xpath(".//div[@class='Order_Modal__YZ-d3']//button[@class='Button_Button__ra12g Button_Middle__1CSJM']");
+    private final By submitButton = By.xpath(".//button[@class='Button_Button__ra12g Button_Middle__1CSJM']");
+    // Сообщение если поле не заполнено или incorrect value
+    private final By nameFieldError = By.xpath("//div[text()='Введите корректное имя']");
+    private final By surnameFieldError = By.xpath("//div[text()='Введите корректную фамилию']");
+    private final By phoneNumberFieldError = By.xpath("//div[text()='Введите корректный номер']");
+    private final By subwayStationError = By.xpath("//div[@class='Order_MetroError__1BtZb']");
+    private final By addressFieldInputError = By.xpath("//div[text()='Введите корректный адрес']");
+    private final By сommentsDeliveryFieldError = By.xpath("//div[text()='Тут что-то не так']");
+    public OrderPage(WebDriver driver) {
         super(driver);
     }
-    // Локаторы для полей ввода в форме заказа
-    private By nameFieldInput = By.xpath(".//input[@placeholder='* Имя']");
-    private By surnameFieldInput = By.xpath(".//input[@placeholder='* Фамилия']");
-    private By addressFieldInput = By.xpath(".//input[@placeholder='* Адрес: куда привезти заказ']");
-    private By phoneFieldInput = By.xpath(".//input[@placeholder='* Телефон: на него позвонит курьер']");
-    private By rentLength = By.xpath(".//*[@class='Dropdown-placeholder']");
-    private By colorSelectionBlack = By.xpath(".//input[@id='black']");
-    private By colorSelectionGrey = By.xpath(".//input[@id='grey']");
-    private By commentsForDeliveryGuy = By.xpath(".//input[@class='Input_Input__1iN_Z Input_Responsible__1jDKN']");
-
-    // Кнопки для заказа в форме заказа
-    private By buttonNext = By.xpath(".//button[@class='Button_Button__ra12g Button_Middle__1CSJM']");
-    private By yesButton = By.xpath(".//div[@class='Order_Modal__YZ-d3']//button[@class='Button_Button__ra12g Button_Middle__1CSJM']");
-    private By submitButton = By.xpath(".//button[@class='Button_Button__ra12g Button_Middle__1CSJM']");
-
-    // Сообщение если поле не заполнено или incorrect value
-    private By nameFieldError = By.xpath("//div[text()='Введите корректное имя']");
-    private By surnameFieldError = By.xpath("//div[text()='Введите корректную фамилию']");
-    private By phoneNumberFieldError = By.xpath("//div[text()='Введите корректный номер']");
-
-    private By subwayStationError = By.xpath("//div[@class='Order_MetroError__1BtZb']");
-
-    private By addressFieldInputError = By.xpath("//div[text()='Введите корректный адрес']");
-    private By сommentsDeliveryFieldError= By.xpath("//div[text()='Тут что-то не так']");
 
     // Нажать на верх. кнопку заказа
     public void clickOrderButtonTop() {
         driver.findElement(orderButtonTop).click();
     }
+
     //общий метод для получения текста ошибки
     public String getErrorMessage(By locator) {
         WebDriverWait wait = new WebDriverWait(driver, standardWaitTime);
         wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
         return driver.findElement(locator).getText();
     }
+
     public String getSubwayStationError() {
         return getErrorMessage(subwayStationError);
     }
+
     public String getPhoneNumberFieldError() {
         return getErrorMessage(phoneNumberFieldError);
     }
+
     public String getEmptyNameFieldErrorMessage() {
         return getErrorMessage(nameFieldError);
     }
+
     public String getSurnameFieldError() {
         return getErrorMessage(surnameFieldError);
     }
+
     public String getAddressFieldError() {
         return getErrorMessage(addressFieldInputError);
     }
+
     public String getCommentsDeliveryFieldError() {
         return getErrorMessage(сommentsDeliveryFieldError);
     }
 
 
     // Заполнить Имя
-    public void fillNameFieldInput(String name){
+    public void fillNameFieldInput(String name) {
         driver.findElement(nameFieldInput).sendKeys(name);
     }
+
     // Заполнить Фамилию
-    public void fillSurnameFieldInput(String surname){
+    public void fillSurnameFieldInput(String surname) {
         driver.findElement(surnameFieldInput).sendKeys(surname);
     }
+
     // Заполнить Адрес
-    public void fillAddressFieldInput(String address){
+    public void fillAddressFieldInput(String address) {
         driver.findElement(addressFieldInput).sendKeys(address);
     }
+
     // Заполнить номер
-    public void fillPhoneFieldInput (String phoneNumber) {
+    public void fillPhoneFieldInput(String phoneNumber) {
         driver.findElement(phoneFieldInput).sendKeys(phoneNumber);
     }
+
     //Нажать на кнопку Далее
-    public void clickButtonNext(){
+    public void clickButtonNext() {
         driver.findElement(buttonNext).click();
     }
 
@@ -105,32 +116,38 @@ public class OrderPage extends BasePage {
         dropdownCalendarSelect.sendKeys(date);
         dropdownCalendarSelect.sendKeys(Keys.ENTER);
     }
+
     // Выбор Срок аренды
-    public void selectRentLength(String rentOption){
+    public void selectRentLength(String rentOption) {
         WebElement dropdown = driver.findElement(rentLength);
         dropdown.click();
         By rentLengthElement = By.xpath(String.format("//div[contains(@class,'Dropdown-option') and text()='%s']", rentOption));
         driver.findElement(rentLengthElement).click();
     }
+
     // Цвет самоката выбрать - Черный
-    public void selectColorBlack(){
+    public void selectColorBlack() {
         driver.findElement(colorSelectionBlack).click();
     }
+
     // Цвет самоката выбрать - Серый
-    public void selectColorGrey(){
+    public void selectColorGrey() {
         driver.findElement(colorSelectionGrey).click();
     }
+
     // Комментарий для курьера написать
-    public void fillCommentsForDeliveryGuy (String comments){
+    public void fillCommentsForDeliveryGuy(String comments) {
         driver.findElement(commentsForDeliveryGuy).click();
         driver.findElement(commentsForDeliveryGuy).sendKeys(comments);
     }
+
     // Кнопка Заказать - Нажать
-    public void pressSubmitButton(){
+    public void pressSubmitButton() {
         driver.findElement(submitButton).click();
     }
+
     // Кнопка Да - Хотите оформить заказ?
-    public void pressYesButton(){
+    public void pressYesButton() {
         new WebDriverWait(driver, standardWaitTime).until(ExpectedConditions.visibilityOfElementLocated(yesButton));
         driver.findElement(yesButton).click();
     }
@@ -144,4 +161,6 @@ public class OrderPage extends BasePage {
         String successText = driver.findElement(successPopup).getText();
         return successText;
     }
+
+
 }
